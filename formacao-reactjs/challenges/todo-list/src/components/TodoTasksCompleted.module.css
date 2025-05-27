@@ -1,0 +1,28 @@
+.tasksCompleted {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tasksCompleted span {
+  font-weight: bold;
+}
+
+.tasksCompletedTitle {
+  color: var(--purple-500);
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.tasksCompletedCount {
+  background: var(--gray-400);
+  min-width: 3.25rem;
+  min-height: 1.188rem;
+  color: var(--gray-200);
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}

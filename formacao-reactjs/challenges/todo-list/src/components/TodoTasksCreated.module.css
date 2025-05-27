@@ -1,0 +1,28 @@
+.tasksCreated {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tasksCreated span {
+  font-weight: bold;
+}
+
+.tasksCreatedTitle {
+  color: var(--blue-500);
+  font-size: 0.875rem;
+  width: 6.625rem;
+}
+
+.tasksCreatedCount {
+  background: var(--gray-400);
+  min-width: 1.5rem;
+  min-height: 1.188rem;
+  color: var(--gray-200);
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+}

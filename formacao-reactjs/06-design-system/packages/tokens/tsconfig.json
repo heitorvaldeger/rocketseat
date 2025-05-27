@@ -1,0 +1,12 @@
+{
+  "extends": "@ignite-ui/ts-config/tsconfig.base.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}

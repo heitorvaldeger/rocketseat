@@ -1,0 +1,28 @@
+.header {
+  height: 12.5rem;
+  background: var(--gray-700);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.highlight {
+  font-weight: 900;
+  font-size: 2.5rem;
+} 
+
+.highlight::before {
+  content: 'to';
+  color: var(--blue-500);
+}
+
+.highlight::after {
+  content: 'do';
+  color: var(--purple-dark-500);
+}
+
+.header img {
+  width: 1.375rem;
+  height: 2.25rem;
+}
