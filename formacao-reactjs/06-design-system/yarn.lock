@@ -345,8 +345,11 @@
   version "1.0.0"
   resolved "file:packages/react"
   dependencies:
+    "@phosphor-icons/react" "^2.1.10"
     "@radix-ui/react-avatar" "^1.1.10"
     "@stitches/react" "^1.2.8"
+    i "^0.3.7"
+    npm "^11.4.1"
 
 "@ignite-ui/tokens@*", "@ignite-ui/tokens@file:/Users/heitoraurelio/workspace/rocketseat/formacao-reactjs/06-design-system/packages/tokens":
   version "1.0.0"
