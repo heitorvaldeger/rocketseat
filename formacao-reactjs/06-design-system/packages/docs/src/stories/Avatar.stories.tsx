@@ -6,6 +6,13 @@ export default {
   component: Avatar,
   args: {
     src: 'https://github.com/heitorvaldeger.png'
+  },
+  argTypes: {
+    src: {
+      control: {
+        type: 'text'
+      }
+    }
   }
 } as Meta<AvatarProps>
 

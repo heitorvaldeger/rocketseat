@@ -7,6 +7,13 @@ export default {
   args: {
     children: <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facilis praesentium eos vel. Alias, repellat doloribus asperiores quis fugit blanditiis, tenetur harum nulla libero saepe assumenda in pariatur accusamus! Mollitia, officiis?</Text>
   },
+  argTypes: {
+    children: {
+      control: {
+        type: null
+      }
+    }
+  }
 } as Meta<BoxProps>
 
 export const Primary: StoryObj<BoxProps> = {

@@ -8,14 +8,29 @@ export default {
   args: {
     disabled: false,
     children: 'Send',
-    size: 'md'
+    size: 'md',
+    variant: 'primary'
   },
   argTypes: {
     size: {
       options: ['sm', 'md'],
       control: {
-        type: 'select'
+        type: 'inline-radio'
       },
+    },
+    variant: {
+      options: ['primary', 'secondary', 'tertiary'],
+      control: {
+        type: 'inline-radio'
+      },
+    },
+    disabled: {
+      control: {
+        type: 'boolean'
+      }
+    },
+    onClick: {
+      action: 'click'
     }
   }
 } as Meta<ButtonProps>
