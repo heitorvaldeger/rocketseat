@@ -1,1 +1,0 @@
-export const USER_REPOSITORY_GITHUB_PATH="facebook/react"
