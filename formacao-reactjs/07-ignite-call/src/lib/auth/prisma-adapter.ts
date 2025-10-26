@@ -1,38 +1,71 @@
 import { Adapter } from 'next-auth/adapters'
 import { prisma } from '../prisma'
 import { Account } from 'next-auth'
-export function PrismaAdapter(): Adapter {
+import { NextApiRequest, NextApiResponse } from 'next'
+import { destroyCookie, parseCookies } from 'nookies'
+
+export function PrismaAdapter(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Adapter {
   return {
-    // async createUser(user) {
-    //   // Create a new user in the database
-    //   const newUser = await prisma.user.create({ data: user })
-    //   return newUser
-    // },
+    async createUser(user: any) {
+      const { '@ignitecall:userId': userIdOnCookies } = parseCookies({ req })
+
+      if (!userIdOnCookies) {
+        throw new Error('User ID not found in cookies.')
+      }
+
+      const prismaUser = await prisma.user.update({
+        where: { id: userIdOnCookies },
+        data: {
+          name: user.name,
+          email: user.email,
+          avatar_url: user.avatar_url,
+        },
+      })
+
+      destroyCookie({ res }, '@ignitecall:userId', {
+        path: '/',
+      })
+
+      return {
+        id: prismaUser.id,
+        name: prismaUser.name,
+        username: prismaUser.username,
+        email: prismaUser.email,
+        emailVerified: null,
+      }
+    },
     async getUser(id) {
       // Retrieve a user by their ID
-      const user = await prisma.user.findUniqueOrThrow({ where: { id } })
+      const user = await prisma.user.findUnique({ where: { id } })
+      if (!user) return null
+
       return {
         id: user.id,
         name: user.name,
-        email: user.email,
+        email: user.email!,
         avatar_url: user.avatar_url!,
         emailVerified: null,
       }
     },
     async getUserByEmail(email) {
       // Retrieve a user by their email
-      const user = await prisma.user.findUniqueOrThrow({ where: { email } })
+      const user = await prisma.user.findUnique({ where: { email } })
+      if (!user) return null
+
       return {
         id: user.id,
         name: user.name,
-        email: user.email,
+        email: user.email!,
         avatar_url: user.avatar_url!,
         emailVerified: null,
       }
     },
     async getUserByAccount({ provider, providerAccountId }) {
       // Retrieve a user by their account details
-      const account = await prisma.account.findUniqueOrThrow({
+      const account = await prisma.account.findUnique({
         where: {
           provider_provider_account_id: {
             provider,
@@ -49,7 +82,7 @@ export function PrismaAdapter(): Adapter {
       return {
         id: account.id,
         name: account.user.name,
-        email: account.user.email,
+        email: account.user.email!,
         avatar_url: account.user.avatar_url!,
         emailVerified: null,
       }
@@ -67,7 +100,7 @@ export function PrismaAdapter(): Adapter {
       return {
         id: updatedUser.id,
         name: updatedUser.name,
-        email: updatedUser.email,
+        email: updatedUser.email!,
         avatar_url: updatedUser.avatar_url!,
         emailVerified: null,
       }
@@ -76,10 +109,10 @@ export function PrismaAdapter(): Adapter {
       // Link an account to a user
       await prisma.account.create({
         data: {
-          user_id: account.user_id,
+          user_id: account.userId!,
           type: account.type,
           provider: account.provider,
-          provider_account_id: account.provider_account_id,
+          provider_account_id: account.providerAccountId,
           refresh_token: account.refresh_token,
           access_token: account.access_token,
           expires_at: account.expires_at,
@@ -107,10 +140,11 @@ export function PrismaAdapter(): Adapter {
     },
     async getSessionAndUser(sessionToken) {
       // Retrieve a session and its associated user
-      const session = await prisma.session.findUniqueOrThrow({
+      const session = await prisma.session.findUnique({
         where: { session_token: sessionToken },
         include: { user: true },
       })
+
       if (!session) return null
 
       const { user, ...sessionData } = session
@@ -123,7 +157,7 @@ export function PrismaAdapter(): Adapter {
         user: {
           id: user.id,
           name: user.name,
-          email: user.email,
+          email: user.email!,
           avatar_url: user.avatar_url!,
           emailVerified: null,
         },
